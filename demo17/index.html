@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>从服务器更新数据</title>
+    <script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+    <script src="../build/browser.min.js"></script>
+    <script src="../build/remarkable.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+        var data = [
+            {id:1,author:'jv',text:'DS'},
+            {id:2,author:'gjw',text:'asdasd'}
+        ];
+        var Comment = React.createClass({
+            render:function(){
+                return (
+                    <div className='comment'>
+                        <h2 className='commentAuthor'>
+                        {this.props.author}
+                        </h2>
+                        {this.props.children.toString()}
+                    </div>
+                );
+            }
+        });
+        var CommentList = React.createClass({
+            getInitialState:function(){
+                return {data:[]};
+            },
+            componentDidMount:function(){
+                $.ajax({
+                    url: this.props.url,
+                    dataType: 'json',
+                    cache: false,
+                    success: function(data) {
+                        this.setState({data: data});
+                    }.bind(this),
+                    error: function(xhr, status, err) {
+                        console.error(this.props.url, status, err.toString());
+                    }.bind(this)
+                });
+            },
+            render:function(){
+                //数据动态渲染
+                var commentNodes = this.state.data.map(function(comment){
+                    return (
+                        <Comment author={comment.author} key={comment.id}>
+                            {comment.text}
+                        </Comment>
+                    );
+                
+                });
+                return (
+                    <div className='commentList'>
+                        {commentNodes}
+                    </div>
+                );
+            }
+        });
+        ReactDOM.render(
+            <CommentList data={this.state.data} />,
+            document.getElementById('example')
+        );
+    </script>
+  </body>
+</html>
+

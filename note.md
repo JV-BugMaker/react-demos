@@ -362,3 +362,48 @@ rawMarkup:function(){
 }
 <span dangerouslySetInnerHTML={this.rawMarkup()} />
 ```
+
+##挂钩数据模型
+
+>由于最终的数据会来自服务器，我们需要以一种模块化的方式将这个数据传入到Commenlist中，通过props传入数据
+
+```
+var data = [
+            {id:1,author:'jv',text:'DS'},
+            {id:2,author:'gjw',text:'asdasd'}
+        ];
+        var Comment = React.createClass({
+            render:function(){
+                return (
+                    <div className='comment'>
+                        <h2 className='commentAuthor'>
+                        {this.props.author}
+                        </h2>
+                        {this.props.children.toString()}
+                    </div>
+                );
+            }
+        });
+        var CommentList = React.createClass({
+            render:function(){
+                //数据动态渲染
+                var commentNodes = this.props.data.map(function(comment){
+                    return (
+                        <Comment author={comment.author} key={comment.id}>
+                            {comment.text}
+                        </Comment>
+                    );
+                
+                });
+                return (
+                    <div className='commentList'>
+                        {commentNodes}
+                    </div>
+                );
+            }
+        });
+        ReactDOM.render(
+            <CommentList data={data} />,
+            document.getElementById('example')
+        );
+```
