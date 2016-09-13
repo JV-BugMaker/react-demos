@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>添加Markdown</title>
+    <script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+    <script src="../build/browser.min.js"></script>
+    <script src="../build/remarkable.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+        var Comment = React.createClass({
+            rawMarkup:function(){
+                var md = new Remarkable();
+                var rawMarkup = md.render(this.props.children.toString());
+                return {__html:rawMarkup}; 
+            },
+            render:function(){
+                return (
+                    <div className='comment'>
+                        <h2 className='commentAuthor'>
+                        {this.props.author}
+                        </h2>
+                        <span dangerouslySetInnerHTML={this.rawMarkup()} />
+                    </div>
+                );
+            }
+        });
+        var CommentList = React.createClass({
+            render:function(){
+                return (
+                    <div className='commentList'>
+                        <Comment author='jv'>jvjvjvjvjv</Comment>
+                        <Comment author='gjw'>gjwgjwgjw</Comment>
+                    </div>
+                );
+            }
+        });
+        ReactDOM.render(
+            <CommentList />,
+            document.getElementById('example')
+        );
+    </script>
+  </body>
+</html>
+

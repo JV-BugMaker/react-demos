@@ -48,6 +48,7 @@ ReactDOM.render(
 >添加属性class时需要写成className，for属性需要写成htmlFor因为class和for是js关键字.
 
 ##this.props.children
+
 >this.props对象的属性与组件的属性一一对应。特殊的就是this.props.children属性---表示组件的所有子节点
 
 ```
@@ -341,3 +342,23 @@ ReactDOM.render(
 ```
 >从github上的API抓取数据,然后将Promise对象作为属性传给组件
 
+##添加Markdown
+
+>Markdown是一种简化的内联格式化你的文字的方法。使用第三方库remarkable，它接收Markdown文本并且转换为原始的HTML
+>调用remarkable库,从this.props.children转换成remarkable能理解的原始字符串
+>
+
+```
+var md = new Remarkable();
+{md.render(this.props.children.toString())}
+```
+>为了避免受XSS攻击
+
+```
+rawMarkup:function(){
+    var md = new Remarkable();
+    var rawMarkup = md.render(this.props.children.toString());
+    return {__html:rawMarkup};
+}
+<span dangerouslySetInnerHTML={this.rawMarkup()} />
+```
