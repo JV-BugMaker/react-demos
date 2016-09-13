@@ -1,6 +1,7 @@
 #React学习笔记
 
 ##JSX语法
+
 >HTML语言直接写在JavaScript语言之中，不加任何引号，它允许HTML与JS的混写.
 >写法好别扭，每行结束不能写分号;
 >使用的标签是<script text="text/babel"></script> 上线之前需要经过babel的编译
@@ -25,6 +26,7 @@ var arr = [
 ```
 
 ##组件
+
 >React允许将代码封装成组件(component)，然后像插入普通HTML标签一样，在网页中插入这个组件。React.createClass方法就用于生成一个组件类
 >模板插入<HelloMessage />时，会自动生成HelloMessage的一个实例。所有组件类都必须有自己的render方法，用于输出组件
 
@@ -110,6 +112,7 @@ var MyTitle = React.createClass({
 ```
 
 ##获取真实的DOM节点
+
 >组件并不是真实的DOM节点，而是内存之中的一种数据结构,叫做虚拟DOM。只有当它插入文档以后，才会变成真实的DOM。
 >在React设计上，所有DOM变动，都现在虚拟DOM上发生，然后再将实际发生变动的部分，反映在真实DOM上，这种算法叫做DOM diff。
 
@@ -135,6 +138,7 @@ var MyComponent = React.createClass({
 >React组件支持很多事件,除了Click事件外，还有KeyDown、Copy、Scroll等。前面增加一个handle +事件方式
 
 ##this.state
+
 >组件免不了要与用户互动，React的一大创新，就是将组件看成是一个状态机，一开始有一个初始状态，然后用户互动，导致状态变化，从而触发重新渲染UI
 
 ```
@@ -164,6 +168,7 @@ var LikeButton = React.createClass({
 >但是this.props表示那些一旦定义就不在改变的特性，而this.state是会随着用户互动而产生变化的特性。
 
 ##表单
+
 >用户在表单填入的内容，属于用户跟组件的互动,所以不能用this.props读取
 >可以采用this.state去获取属性值
 
@@ -190,6 +195,7 @@ var Input = React.createClass({
 >定义onChange事件作为回调函数,textarea元素、select元素、radio元素都属于这种情况 
 
 ##组件的生命周期
+
 >组件的生命周期分为三个状态:
 
 * Mounting:已插入真实DOM
@@ -247,6 +253,7 @@ ReactDOM.render(
 ```
 
 ##使用Ajax
+
 >组件的数据来源，通常是通过ajax请求从服务器获取,可以使用componentDidMount方法设置Ajax请求，等到请求成功，
 >再用this.setState方法重新渲染UI
 
